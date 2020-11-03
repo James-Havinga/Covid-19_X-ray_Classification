@@ -18,7 +18,7 @@ def get_model():
 	model=load_model('model\model-015.model')
 	print("Model Loaded")
 
-label_dict={0:'Covid19 Negative', 1:'Covid19 Positive'}
+label_dict={0:'Covid-19 Negative', 1:'Covid-19 Positive'}
 
 def preprocess(img):
 

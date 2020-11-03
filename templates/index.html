@@ -1,23 +1,107 @@
+<!DOCTYPE HTML>
+
 <html>
 	<head>
-		<title>COVID-19 TESTING</title>
+		<title>Covid-19 X-Ray Classifier</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/main.css') }}" />
 	</head>
+	<body class="is-preload">
 
-	<body>
-		<h1>COVID-19 TESTING USING X-RAY IMAGES</h1>
-		<input id="image-selector" type="file"> 
-		<button id="predict-button">Predict</button>
-		<p>PREDICTION: <span id="result">...</span></p>
-		<p>PROBABILITY: <span id="probability">...</span></p>
-		<img id="selected-image" width="400" src=""/>
+		<!-- Wrapper -->
+			<div id="wrapper">
 
-	</body>
+				<!-- Header -->
+					<header id="header" class="alt">
+						<span class="logo"><img src="/static/virus.png" alt="" style="width: 100px;" /></span>
+						<h1>Covid-19 X-Ray Classifier</h1>
+					</header>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="#intro" class="active">Test Yourself</a></li>
+							<li><a href="#first">Discaimer</a></li>
+							<li><a href="#second">About</a></li>
+						</ul>
+					</nav>
 
+				<!-- Main -->
+					<div id="main">
+
+						<!-- Test Yourself -->
+							<section id="intro" class="main">
+								<div class="spotlight">
+									<div class="content">
+										<header class="major">
+											<h2>Test Yourself</h2>
+										</header>
+										<p style="width: 80%;">Uplaod an image of an X-Ray of your lungs and our deep learning model
+											will give you the probability of you having Covid-19.
+										</p>
+										<ul class="actions">
+											<li><input id="file" type="file"></input>
+												<label for="file" class="button">Uplaod</label>
+											</li>
+											<li><label class="button" id="predict-button">Predict</label></li>
+										</ul>
+										<p>Prediction: <span id="result"></span></p>
+										<p>Probability: <span id="probability"></span></p>
+									</div>
+									<span class="image"><img id="selected-image" src="" alt=""/></span>
+								</div>
+							</section>
+
+						<!-- Disclaimer -->
+							<section id="first" class="main special">
+								<header class="major">
+									<h2>Disclaimer</h2>
+									<p>Please note that the results given in this application
+										are not 100% accurate. The results can vary in percentage
+										of probability. And therefore should only be seen as a probability
+										and not a guaranteed diognosis. For more information on the use of 
+										AI in Covid-19 X-Ray scans please click learn more below.
+									</p>
+								</header>
+								<footer class="major">
+									<ul class="actions special">
+										<li><a href="https://www.nature.com/articles/s41467-020-17971-2" class="button">Learn More</a></li>
+									</ul>
+								</footer>
+							</section>
+
+						<!-- About -->
+							<section id="second" class="main special">
+								<header class="major">
+									<h2>About Us</h2>
+									<p>This application operates through the use of a deep learning model that has
+										been trained on roughly 200 images of healthy lung X-Rays and then roughly 200
+										Covid-19 postivie X-rays. The model was trained using tensorflow and keras which are both
+										free open source software libraries used for machine learning.
+										There is alot of room for improvement in terms
+										of the accuracy of the model. As at the moment the model is only about 90%
+										accurate. And for medical purposes that would then need to be 
+										more in the regions of 98% to 100% accurate.
+									</p>
+								</header>
+							</section>
+					</div>
+			</div>
+		<!-- Scripts -->
+			<script src="/static/jquery.min.js"></script>
+			<script src="/static/jquery.scrollex.min.js"></script>
+			<script src="/static/jquery.scrolly.min.js"></script>
+			<script src="/static/browser.min.js"></script>
+			<script src="/static/breakpoints.min.js"></script>
+			<script src="/static/util.js"></script>
+			<script src="/static/main.js"></script>
+
+			
 <script>
     let base64Image;
-    $("#image-selector").change(function() {
+    $("#file").change(function() {
+		console.log("Clicked")
         let reader = new FileReader();
         reader.onload = function(e) {
             let dataURL = reader.result;
@@ -25,7 +109,7 @@
             base64Image = dataURL.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
             console.log(base64Image);
         }
-        reader.readAsDataURL($("#image-selector")[0].files[0]);
+        reader.readAsDataURL($("#file")[0].files[0]);
         $("#result").text("");
         $("#probability").text("");
 
@@ -44,5 +128,5 @@
     });
     
 </script>
-
+	</body>
 </html>
