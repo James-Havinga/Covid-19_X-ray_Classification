@@ -49,7 +49,16 @@
 										<p>Prediction: <span id="result"></span></p>
 										<p>Probability: <span id="probability"></span></p>
 									</div>
-									<span class="image"><img id="selected-image" src="" alt=""/></span>
+									<div class="right-content" style="width: 550px;">
+										<span class="image"><img id="selected-image" src="" alt=""/></span>
+										<div id="extra_info_negative" style="display: none; text-align: center;">
+											<p>Good News... <br/> Your X-Ray is predicted to be Covid-19 negative. But if you still have symptoms for Covid please consult a Doctor.</p>
+										</div>
+										<div id="extra_info_positive" style="display: none; text-align: center;">
+											<p>Bad News... <br/> Your X-Ray is predicted to be Covid-19 positive. Remember this is not a garanteed diognosis so we suggest consulting a doctor.</p>
+										</div>
+									</div>
+									
 								</div>
 							</section>
 
@@ -122,11 +131,25 @@
         console.log(message);
         $.post("http://127.0.0.1:5000/predict", JSON.stringify(message), function(response){
             $("#result").text(response.prediction.result);
-            $("#probability").text(response.prediction.accuracy.toFixed(2));
-            console.log(response);
+            $("#probability").text(response.prediction.accuracy.toFixed(2) * 100 + " %");
+			console.log(response);
+
+			var answer = response.prediction.result;
+			var n = document.getElementById("extra_info_negative");
+			var p = document.getElementById("extra_info_positive");
+
+			if(answer == "Covid-19 Negative") {
+				p.style.display = 'none';
+				n.style.display = 'block';
+			} 
+			else if (answer == "Covid-19 Positive"){
+				n.style.display = 'none';
+				p.style.display = 'block';
+			}
+		
         });
     });
-    
+	
 </script>
 	</body>
 </html>
